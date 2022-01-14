@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  api-grahpql:
+    build: .
+    volumes:
+      - ".:/usr/src/app"
+    ports:
+      - "4001:4001"
+    links:
+      - mongo
+    environment:
+      - URL_MONGO=mongodb://epsor:epsor@mongo
+
+  mongo:
+    image: mongo:4.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=epsor
+      - MONGO_INITDB_ROOT_PASSWORD=epsor
