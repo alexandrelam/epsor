@@ -18,4 +18,11 @@ export class BookResolver {
     });
     return await book.save();
   }
+
+  @Query(() => Book!, { nullable: true })
+  async findBookByID(
+    @Arg("bookID") bookID: string
+  ): Promise<Book | undefined | null> {
+    return await Book.findOne(bookID);
+  }
 }
