@@ -39,4 +39,20 @@ export class BookResolver {
     }
     return null;
   }
+
+  @Mutation(() => Book!)
+  async updateBook(
+    @Arg("bookID") bookID: string,
+    @Arg("name") name: string,
+    @Arg("nbOfPages") nbOfPages: number
+  ): Promise<Book | null> {
+    let book = await Book.findOne(bookID);
+    if (book) {
+      book.name = name;
+      book.nbOfPages = nbOfPages;
+      await getRepository(Book).update(bookID, book);
+      return book;
+    }
+    return null;
+  }
 }
