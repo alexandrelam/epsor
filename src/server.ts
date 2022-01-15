@@ -1,25 +1,23 @@
-import express from "express";
-import { ApolloServer, gql } from "apollo-server-express";
+import "reflect-metadata";
+import { ApolloServer } from "apollo-server-express";
+import Express from "express";
+import { buildSchema } from "type-graphql";
+import { createConnection } from "typeorm";
+import { BookResolver } from "./resolvers/BookResolver";
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => "Hello world!",
-  },
+const startServer = async () => {
+  await createConnection();
+  const schema = await buildSchema({
+    resolvers: [BookResolver],
+  });
+  const app = Express();
+  const apolloServer = new ApolloServer({ schema });
+  apolloServer.start().then(() => {
+    apolloServer.applyMiddleware({ app });
+    app.listen(4000, () => {
+      console.log("server started");
+    });
+  });
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
-
-const app = express();
-
-server.start().then(() => {
-  server.applyMiddleware({ app });
-  app.listen({ port: 4001 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4001${server.graphqlPath}`)
-  );
-});
+startServer();
