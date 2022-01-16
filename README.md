@@ -156,6 +156,6 @@ Project Link: [https://github.com/alexandrelam/epsor](https://github.com/alexand
 [issues-shield]: https://img.shields.io/github/issues/alexandrelam/epsor.svg?style=for-the-badge
 [issues-url]: https://github.com/alexandrelam/epsor/issues
 [license-shield]: https://img.shields.io/github/license/alexandrelam/epsor.svg?style=for-the-badge
-[license-url]: https://github.com/alexandrelam/epsor/blob/master/LICENSE.txt
+[license-url]: https://github.com/alexandrelam/epsor/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/alexandre-lam-74787b191/
