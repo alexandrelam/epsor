@@ -11,8 +11,9 @@
 <br />
 <div align="center">
   <a href="https://github.com/alexandrelam/epsor">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://user-images.githubusercontent.com/25727549/149663435-cc28b3ab-ae20-454b-b37f-5fb27b8a831b.png" alt="Logo" width="80" height="80">
   </a>
+
 
   <h3 align="center">Epsor</h3>
 
@@ -24,6 +25,12 @@
     <a href="https://github.com/alexandrelam/epsor/issues">Request Feature</a>
   </p>
 </div>
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+![image](https://user-images.githubusercontent.com/25727549/149663555-fe9025bf-394a-4b18-bae5-d5f7a82bb8c9.png)
+
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -154,4 +161,3 @@ Project Link: [https://github.com/alexandrelam/epsor](https://github.com/alexand
 [license-url]: https://github.com/alexandrelam/epsor/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
