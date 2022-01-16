@@ -44,14 +44,6 @@ export class BookResolver {
       topic: "book.delete",
       messages: [{ value: bookID }],
     });
-    /*
-    const allBook = await getRepository(Book);
-    const book = await allBook.findOne(bookID);
-    if (book) {
-      await allBook.delete(bookID);
-      return book;
-    }
-    */
     return null;
   }
 }
