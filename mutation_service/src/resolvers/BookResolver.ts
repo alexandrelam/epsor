@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
 import { getRepository } from "typeorm";
 import { Book } from "../entities/Book";
+import kafka from "../kafka";
 @Resolver()
 export class BookResolver {
   @Query(() => [Book])
@@ -46,6 +47,13 @@ export class BookResolver {
     @Arg("name") name: string,
     @Arg("nbOfPages") nbOfPages: number
   ): Promise<Book | null> {
+    const producer = kafka.producer();
+    await producer.connect();
+    await producer.send({
+      topic: "test-topic",
+      messages: [{ value: "Hello KafkaJS user!" }],
+    });
+
     let book = await Book.findOne(bookID);
     if (book) {
       book.name = name;
