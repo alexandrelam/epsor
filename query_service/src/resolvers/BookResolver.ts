@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
 import { Book } from "../entities/Book";
 import kafka from "../kafka";
+
 @Resolver()
 export class BookResolver {
   @Query(() => [Book])
@@ -10,10 +11,11 @@ export class BookResolver {
 
   @Mutation(() => Book!)
   async addBook(
+    @Arg("id") id: string,
     @Arg("name") name: string,
     @Arg("nbOfPages") nbOfPages: number
   ): Promise<Book> {
-    const payload = { name: name, nbOfPages: nbOfPages };
+    const payload = { id, name, nbOfPages };
     const producer = kafka.producer();
     await producer.connect();
     await producer.send({
@@ -21,6 +23,7 @@ export class BookResolver {
       messages: [{ value: JSON.stringify(payload) }],
     });
     const book = Book.create({
+      id,
       name,
       nbOfPages,
     });
