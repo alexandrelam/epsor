@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
-import { getRepository } from "typeorm";
 import { Book } from "../entities/Book";
+import kafka from "../kafka";
 @Resolver()
 export class BookResolver {
   @Query(() => [Book])
@@ -13,11 +13,18 @@ export class BookResolver {
     @Arg("name") name: string,
     @Arg("nbOfPages") nbOfPages: number
   ): Promise<Book> {
+    const payload = { name: name, nbOfPages: nbOfPages };
+    const producer = kafka.producer();
+    await producer.connect();
+    await producer.send({
+      topic: "book.create",
+      messages: [{ value: JSON.stringify(payload) }],
+    });
     const book = Book.create({
       name,
       nbOfPages,
     });
-    return await book.save();
+    return book;
   }
 
   @Query(() => Book!, { nullable: true })
@@ -31,28 +38,20 @@ export class BookResolver {
   async deleteBookByID(
     @Arg("bookID") bookID: string
   ): Promise<Book | undefined | null> {
+    const producer = kafka.producer();
+    await producer.connect();
+    await producer.send({
+      topic: "book.delete",
+      messages: [{ value: bookID }],
+    });
+    /*
     const allBook = await getRepository(Book);
     const book = await allBook.findOne(bookID);
     if (book) {
       await allBook.delete(bookID);
       return book;
     }
-    return null;
-  }
-
-  @Mutation(() => Book!)
-  async updateBook(
-    @Arg("bookID") bookID: string,
-    @Arg("name") name: string,
-    @Arg("nbOfPages") nbOfPages: number
-  ): Promise<Book | null> {
-    let book = await Book.findOne(bookID);
-    if (book) {
-      book.name = name;
-      book.nbOfPages = nbOfPages;
-      await getRepository(Book).update(bookID, book);
-      return book;
-    }
+    */
     return null;
   }
 }
