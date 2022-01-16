@@ -1,10 +1,10 @@
-import { Entity, BaseEntity, ObjectIdColumn, Column } from "typeorm";
 import { ObjectId } from "mongodb";
+import { Entity, BaseEntity, Column, ObjectIdColumn } from "typeorm";
 
 @Entity()
 export class Book extends BaseEntity {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   name: string;

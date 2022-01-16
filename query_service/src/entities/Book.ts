@@ -1,13 +1,12 @@
 import { ObjectType, Field, ID, Int } from "type-graphql";
-import { Entity, BaseEntity, ObjectIdColumn, Column } from "typeorm";
-import { ObjectId } from "mongodb";
+import { Entity, BaseEntity, Column, ObjectIdColumn } from "typeorm";
 
 @ObjectType()
-@Entity()
+@Entity({ name: "books" })
 export class Book extends BaseEntity {
   @Field(() => ID)
   @ObjectIdColumn()
-  id: ObjectId;
+  id: string;
 
   @Field()
   @Column()
