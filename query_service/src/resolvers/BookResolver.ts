@@ -6,8 +6,6 @@ import kafka from "../kafka";
 export class BookResolver {
   @Query(() => [Book])
   async books(): Promise<Book[]> {
-    console.log("querying");
-    console.log(await Book.find());
     return await Book.find();
   }
 

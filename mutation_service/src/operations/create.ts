@@ -19,7 +19,6 @@ const createBook = async () => {
         console.log(error);
       }
 
-      console.log(book);
       console.log("saved book!");
     },
   });
