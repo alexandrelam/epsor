@@ -14,18 +14,18 @@ export class BookResolver {
     @Arg("name") name: string,
     @Arg("nbOfPages") nbOfPages: number
   ): Promise<Book> {
+    const payload = { name: name, nbOfPages: nbOfPages };
     const producer = kafka.producer();
     await producer.connect();
     await producer.send({
-      topic: "test-topic",
-      messages: [{ value: "Hello KafkaJS user!" }],
+      topic: "book.create",
+      messages: [{ value: JSON.stringify(payload) }],
     });
-
     const book = Book.create({
       name,
       nbOfPages,
     });
-    return await book.save();
+    return book;
   }
 
   @Query(() => Book!, { nullable: true })
