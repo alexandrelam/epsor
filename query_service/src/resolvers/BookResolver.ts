@@ -10,6 +10,8 @@ import {
 import { Book } from "../entities/Book";
 import kafka from "../kafka";
 
+type OrderDirection = "ASC" | "DESC";
+
 @InputType()
 class PaginationInputType {
   @Field(() => Int)
@@ -25,7 +27,7 @@ class OrderByInputType {
   fieldName: string;
 
   @Field()
-  direction: string;
+  direction: OrderDirection;
 }
 
 @Resolver()
