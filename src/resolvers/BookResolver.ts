@@ -23,22 +23,4 @@ export class BookResolver {
     });
     return book.save();
   }
-  /*
-
-  @Query(() => Book!, { nullable: true })
-  async findBookByID(
-    @Arg("bookID") bookID: string
-  ): Promise<Book | undefined | null> {
-    return await Book.findOne(bookID);
-  }
-
-  @Mutation(() => Book!, { nullable: true })
-  async deleteBookByID(
-    @Arg("bookID") bookID: string
-  ): Promise<Book | undefined | null> {
-    const bookExist = await Book.findOne(bookID);
-    if (bookExist) await Book.delete(bookID);
-    return null;
-  }
-  */
 }
