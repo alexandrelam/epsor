@@ -1,25 +1,43 @@
 {
-  "name": "epsor",
+  "name": "epsor-query",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexandrelam/epsor.git"
+    "start": "nodemon --exec ts-node src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alexandrelam/epsor/issues"
-  },
-  "homepage": "https://github.com/alexandrelam/epsor#readme",
   "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.8",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^16.0.0",
-    "husky": "^7.0.4"
+    "husky": "^7.0.4",
+    "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.8",
+    "apollo-server-express": "^3.6.1",
+    "class-validator": "^0.13.2",
+    "express": "^4.17.2",
+    "graphql": "^15.8.0",
+    "kafkajs": "^1.15.0",
+    "mongodb": "^3.7.3",
+    "nodemon": "^2.0.15",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.4.0",
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.2.41",
+    "typescript": "^4.5.4"
   }
 }
