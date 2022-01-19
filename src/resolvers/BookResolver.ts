@@ -1,74 +1,29 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Arg,
-  InputType,
-  Field,
-  Int,
-} from "type-graphql";
-import { Book } from "../entities/Book";
-
-type OrderDirection = "ASC" | "DESC";
-
-@InputType()
-class PaginationInputType {
-  @Field(() => Int)
-  take: number;
-
-  @Field(() => Int)
-  skip: number;
-}
-
-@InputType()
-class OrderByInputType {
-  @Field()
-  fieldName: string;
-
-  @Field()
-  direction: OrderDirection;
-}
+import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import { BookClass, BookModel } from "../entities/Book";
+import { AuthorModel } from "../entities/Author";
 
 @Resolver()
 export class BookResolver {
-  @Query(() => [Book])
-  async books(
-    @Arg("OrderBy", { nullable: true }) OrderBy?: OrderByInputType,
-    @Arg("Pagination", { nullable: true }) Pagination?: PaginationInputType
-  ): Promise<Book[]> {
-    let args = {};
-
-    if (OrderBy) {
-      args = {
-        ...args,
-        order: {
-          [OrderBy.fieldName]: OrderBy.direction,
-        },
-      };
-    }
-
-    if (Pagination) {
-      args = {
-        ...args,
-        skip: Pagination.skip,
-        take: Pagination.take,
-      };
-    }
-
-    return await Book.find(args);
+  @Query(() => [BookClass])
+  async books(): Promise<BookClass[]> {
+    return await BookModel.find();
   }
 
-  @Mutation(() => Book!)
+  @Mutation(() => BookClass!)
   async addBook(
     @Arg("name") name: string,
-    @Arg("nbOfPages") nbOfPages: number
-  ): Promise<Book> {
-    const book = Book.create({
+    @Arg("nbOfPages") nbOfPages: number,
+    @Arg("authorID") authorID: string
+  ): Promise<BookClass> {
+    const author = await AuthorModel.findById(authorID);
+    const book = new BookModel({
       name,
       nbOfPages,
+      author,
     });
     return book.save();
   }
+  /*
 
   @Query(() => Book!, { nullable: true })
   async findBookByID(
@@ -85,4 +40,5 @@ export class BookResolver {
     if (bookExist) await Book.delete(bookID);
     return null;
   }
+  */
 }

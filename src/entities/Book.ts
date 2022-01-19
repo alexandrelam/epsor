@@ -1,18 +1,22 @@
-import { ObjectType, Field, ID, Int } from "type-graphql";
-import { Entity, BaseEntity, Column, ObjectIdColumn } from "typeorm";
+import { ObjectType, Field, Int } from "type-graphql";
+import { getModelForClass, Prop } from "@typegoose/typegoose";
+import { AuthorClass } from "./Author";
 
 @ObjectType()
-@Entity({ name: "books" })
-export class Book extends BaseEntity {
-  @Field(() => ID)
-  @ObjectIdColumn()
-  id: string;
-
+export class BookClass {
   @Field()
-  @Column()
-  name: string;
+  @Prop()
+  public name: string;
 
   @Field(() => Int)
-  @Column()
-  nbOfPages: number;
+  @Prop()
+  public nbOfPages: number;
+
+  @Field(() => AuthorClass)
+  @Prop({ type: () => AuthorClass })
+  public author?: AuthorClass;
 }
+
+export const BookModel = getModelForClass(BookClass, {
+  schemaOptions: { collection: "books" },
+});
