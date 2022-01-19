@@ -8,7 +8,6 @@ import {
   Int,
 } from "type-graphql";
 import { Book } from "../entities/Book";
-import kafka from "../kafka";
 
 type OrderDirection = "ASC" | "DESC";
 
@@ -61,23 +60,14 @@ export class BookResolver {
 
   @Mutation(() => Book!)
   async addBook(
-    @Arg("id") id: string,
     @Arg("name") name: string,
     @Arg("nbOfPages") nbOfPages: number
   ): Promise<Book> {
-    const payload = { id, name, nbOfPages };
-    const producer = kafka.producer();
-    await producer.connect();
-    await producer.send({
-      topic: "book.create",
-      messages: [{ value: JSON.stringify(payload) }],
-    });
     const book = Book.create({
-      id,
       name,
       nbOfPages,
     });
-    return book;
+    return book.save();
   }
 
   @Query(() => Book!, { nullable: true })
@@ -91,12 +81,8 @@ export class BookResolver {
   async deleteBookByID(
     @Arg("bookID") bookID: string
   ): Promise<Book | undefined | null> {
-    const producer = kafka.producer();
-    await producer.connect();
-    await producer.send({
-      topic: "book.delete",
-      messages: [{ value: bookID }],
-    });
+    const bookExist = await Book.findOne(bookID);
+    if (bookExist) await Book.delete(bookID);
     return null;
   }
 }
