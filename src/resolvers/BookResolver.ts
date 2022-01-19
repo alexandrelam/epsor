@@ -6,10 +6,13 @@ import { AuthorModel } from "../entities/Author";
 export class BookResolver {
   @Query(() => [BookClass], { description: "Get all books" })
   async books(
-    @Arg("skip", { defaultValue: 0 }) skip: number,
+    @Arg("page", { defaultValue: 0 }) page: number,
     @Arg("take", { nullable: true }) take?: number
   ): Promise<BookClass[]> {
-    if (take) return await BookModel.find().skip(skip).limit(take);
+    if (take)
+      return await BookModel.find()
+        .skip(page * take)
+        .limit(take);
     return await BookModel.find();
   }
 

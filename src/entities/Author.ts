@@ -1,8 +1,11 @@
-import { ObjectType, Field, Int } from "type-graphql";
+import { ObjectType, Field, Int, ID } from "type-graphql";
 import { Prop, getModelForClass } from "@typegoose/typegoose";
 
 @ObjectType()
 export class AuthorClass {
+  @Field(() => ID)
+  readonly _id: string;
+
   @Prop()
   @Field()
   public name: string;
