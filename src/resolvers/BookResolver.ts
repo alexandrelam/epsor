@@ -4,12 +4,16 @@ import { AuthorModel } from "../entities/Author";
 
 @Resolver()
 export class BookResolver {
-  @Query(() => [BookClass])
-  async books(): Promise<BookClass[]> {
+  @Query(() => [BookClass], { description: "Get all books" })
+  async books(
+    @Arg("skip", { defaultValue: 0 }) skip: number,
+    @Arg("take", { nullable: true }) take?: number
+  ): Promise<BookClass[]> {
+    if (take) return await BookModel.find().skip(skip).limit(take);
     return await BookModel.find();
   }
 
-  @Mutation(() => BookClass!)
+  @Mutation(() => BookClass!, { description: "Add a new book" })
   async addBook(
     @Arg("name") name: string,
     @Arg("nbOfPages") nbOfPages: number,

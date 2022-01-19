@@ -4,7 +4,7 @@ import { BookClass, BookModel } from "../entities/Book";
 
 @Resolver()
 export class AuthorResolver {
-  @Query(() => [AuthorClass])
+  @Query(() => [AuthorClass], { description: "Get all authors" })
   async authors(): Promise<AuthorClass[]> {
     return await AuthorModel.find();
   }
@@ -13,12 +13,12 @@ export class AuthorResolver {
     description: "Get all books from a specific author",
   })
   async booksFromAuthor(
-    @Arg("authorID", { description: "author name" }) authorID: string
+    @Arg("authorID", { description: "Author id" }) authorID: string
   ): Promise<BookClass[]> {
     return await BookModel.find({ "author._id": { $eq: authorID } });
   }
 
-  @Mutation(() => AuthorClass!)
+  @Mutation(() => AuthorClass!, { description: "Add a new author" })
   async addAuthor(
     @Arg("name") name: string,
     @Arg("age") age: number
