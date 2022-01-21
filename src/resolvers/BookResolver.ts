@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import { Resolver, Mutation, Arg, Query, Int } from "type-graphql";
 import { BookClass, BookModel } from "../entities/Book";
 import { AuthorModel } from "../entities/Author";
 
@@ -6,8 +6,8 @@ import { AuthorModel } from "../entities/Author";
 export class BookResolver {
   @Query(() => [BookClass], { description: "Get all books" })
   async books(
-    @Arg("page", { defaultValue: 0 }) page: number,
-    @Arg("take", { nullable: true }) take?: number
+    @Arg("page", () => Int, { defaultValue: 0 }) page: number,
+    @Arg("take", () => Int, { nullable: true }) take?: number
   ): Promise<BookClass[]> {
     if (take)
       return await BookModel.find()
