@@ -16,6 +16,13 @@ export class BookResolver {
     return await BookModel.find();
   }
 
+  @Query(() => BookClass, { description: "Get book by id" })
+  async bookByID(
+    @Arg("bookID", { description: "Book id" }) bookID: string
+  ): Promise<BookClass | null> {
+    return await BookModel.findById(bookID);
+  }
+
   @Mutation(() => BookClass!, { description: "Add a new book" })
   async addBook(
     @Arg("name") name: string,

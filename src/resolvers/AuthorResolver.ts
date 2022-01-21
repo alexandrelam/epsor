@@ -18,11 +18,11 @@ export class AuthorResolver {
     return await BookModel.find({ "author._id": { $eq: authorID } });
   }
 
-  @Query(() => BookClass, { description: "Get book by id" })
-  async bookByID(
-    @Arg("bookID", { description: "Book id" }) bookID: string
-  ): Promise<BookClass | null> {
-    return await BookModel.findById(bookID);
+  @Query(() => [AuthorClass], { description: "Get author by name" })
+  async authorByName(
+    @Arg("name", { description: "Author name" }) name: string
+  ): Promise<AuthorClass[]> {
+    return await AuthorModel.find({ name: { $regex: name, $options: "i" } });
   }
 
   @Mutation(() => AuthorClass!, { description: "Add a new author" })
